@@ -1,52 +1,64 @@
 import 'package:flutter/material.dart';
 
-import './question.dart';
+import './quiz.dart';
+import './result.dart';
 // void main() {
 //   runApp(MyApp());
 // }
 
-void main() => runApp(MyApp()); //this kindof arrow function is only when the function has one expression
+void main() => runApp(
+    MyApp()); //this kindof arrow function is only when the function has one expression
 
 class MyApp extends StatefulWidget {
-
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-
-  var questionIndex = 0;
-
+  //we use both, to say that question wont change during runtime, and to say that the value of questions won't ever change
+  //final: runtime constant
+  //const: compile time constant
+  final _questions = const [
+    {
+      'questionText': 'What\'s your favorite animal?',
+      'answers': ['Cat', 'Dog', 'Bird', 'Dragon'],
+    },
+    {
+      'questionText': 'What\'s your favorite color?',
+      'answers': ['Black', 'Red', 'Green', 'Pink'],
+    },
+    {
+      'questionText': 'What\'s your favorite food?',
+      'answers': ['Bandeja Paisa', 'Pasta', 'Pizza', 'Ramen'],
+    },
+    {
+      'questionText': 'What\'s your favorite place?',
+      'answers': ['Mountain', 'Home', 'Town', 'City'],
+    },
+    {
+      'questionText': 'What\'s your favorite beverage?',
+      'answers': ['Bear', 'Juice', 'Water', 'Soda'],
+    },
+  ];
+  var _questionIndex = 0;
   void _answerQuestion() {
-    setState(() {
-      questionIndex += 1;
-    });
+    if (_questionIndex < _questions.length) {
+      setState(() {
+        _questionIndex += 1;
+      });
+    }
   }
 
   @override //decorator: "build" method from StatelessWidget class wont be considered, but mine here will
   Widget build(BuildContext context) {
-
-    var questions = [
-      'What\'s your favorite animal?',
-      'What\'s your favorite color?',
-      'What\'s your favorite food?',
-      'What\'s your favorite place?',
-      'What\'s your favorite beverage?',
-    ];
-
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           title: Text('My First App'),
         ),
-        body: Column(
-          children: <Widget>[
-            Question(questions.elementAt(questionIndex),),
-            RaisedButton(child: Text('Answer 1'), onPressed: _answerQuestion,),
-            RaisedButton(child: Text('Answer 2'), onPressed: _answerQuestion,),
-            RaisedButton(child: Text('Answer 3'), onPressed: _answerQuestion,),
-          ],
-        ),
+        body: _questionIndex < _questions.length
+            ? Quiz(answerQuestion:_answerQuestion, questions: _questions, questionIndex: _questionIndex)
+            : Result(),
       ),
     );
   }
