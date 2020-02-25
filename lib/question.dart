@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Question extends StatelessWidget {
-  final String
-      questionText; //it's a good convention to add final as in theory we could change the prop inside the class
+  final String questionText; //it's a good convention to add final as in theory we could change the prop inside the class
 
   //constructor
   Question(this.questionText);
