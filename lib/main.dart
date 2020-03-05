@@ -40,19 +40,19 @@ class _MyAppState extends State<MyApp> {
     {
       'questionText': 'What\'s your favorite food?',
       'answers': [
-        {'text': 'Bandeja Paisa', 'score': 10},
+        {'text': 'Ramen', 'score': 10},
         {'text': 'Pasta', 'score': 5},
         {'text': 'Pizza', 'score': 3},
-        {'text': 'Ramen', 'score': 1}
+        {'text': 'Bandeja Paisa', 'score': 1}
       ],
     },
     {
       'questionText': 'What\'s your favorite place?',
       'answers': [
         {'text': 'Mountain', 'score': 10},
-        {'text': 'Home', 'score': 5},
+        {'text': 'City', 'score': 5},
         {'text': 'Town', 'score': 3},
-        {'text': 'City', 'score': 1}
+        {'text': 'Home', 'score': 1}
       ],
     },
     {
@@ -67,6 +67,13 @@ class _MyAppState extends State<MyApp> {
   ];
   var _questionIndex = 0;
   var _totalScore = 0;
+
+  void _resetQuiz(){
+    setState(() {
+      _questionIndex = 0;
+      _totalScore = 0;
+    });
+  }
 
   void _answerQuestion(int score) {
     this._totalScore += score;
@@ -89,7 +96,7 @@ class _MyAppState extends State<MyApp> {
                 answerQuestion: _answerQuestion,
                 questions: _questions,
                 questionIndex: _questionIndex)
-            : Result(_totalScore),
+            : Result(_totalScore, _resetQuiz),
       ),
     );
   }
