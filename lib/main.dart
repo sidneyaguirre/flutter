@@ -6,8 +6,7 @@ import './result.dart';
 //   runApp(MyApp());
 // }
 
-void main() => runApp(
-    MyApp()); //this kindof arrow function is only when the function has one expression
+void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
   @override
@@ -18,30 +17,59 @@ class _MyAppState extends State<MyApp> {
   //we use both, to say that question wont change during runtime, and to say that the value of questions won't ever change
   //final: runtime constant
   //const: compile time constant
+
   final _questions = const [
     {
       'questionText': 'What\'s your favorite animal?',
-      'answers': ['Cat', 'Dog', 'Bird', 'Dragon'],
+      'answers': [
+        {'text': 'Cat', 'score': 10},
+        {'text': 'Dog', 'score': 5},
+        {'text': 'Bird', 'score': 3},
+        {'text': 'Dragon', 'score': 1}
+      ],
     },
     {
       'questionText': 'What\'s your favorite color?',
-      'answers': ['Black', 'Red', 'Green', 'Pink'],
+      'answers': [
+        {'text': 'Black', 'score': 10},
+        {'text': 'Red', 'score': 5},
+        {'text': 'Green', 'score': 3},
+        {'text': 'White', 'score': 1}
+      ],
     },
     {
       'questionText': 'What\'s your favorite food?',
-      'answers': ['Bandeja Paisa', 'Pasta', 'Pizza', 'Ramen'],
+      'answers': [
+        {'text': 'Bandeja Paisa', 'score': 10},
+        {'text': 'Pasta', 'score': 5},
+        {'text': 'Pizza', 'score': 3},
+        {'text': 'Ramen', 'score': 1}
+      ],
     },
     {
       'questionText': 'What\'s your favorite place?',
-      'answers': ['Mountain', 'Home', 'Town', 'City'],
+      'answers': [
+        {'text': 'Mountain', 'score': 10},
+        {'text': 'Home', 'score': 5},
+        {'text': 'Town', 'score': 3},
+        {'text': 'City', 'score': 1}
+      ],
     },
     {
       'questionText': 'What\'s your favorite beverage?',
-      'answers': ['Bear', 'Juice', 'Water', 'Soda'],
+      'answers': [
+        {'text': 'Beer', 'score': 10},
+        {'text': 'Juice', 'score': 5},
+        {'text': 'Water', 'score': 3},
+        {'text': 'Soda', 'score': 1}
+      ],
     },
   ];
   var _questionIndex = 0;
-  void _answerQuestion() {
+  var _totalScore = 0;
+
+  void _answerQuestion(int score) {
+    this._totalScore += score;
     if (_questionIndex < _questions.length) {
       setState(() {
         _questionIndex += 1;
@@ -54,11 +82,14 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('My First App'),
+          title: Text('Quiz App'),
         ),
         body: _questionIndex < _questions.length
-            ? Quiz(answerQuestion:_answerQuestion, questions: _questions, questionIndex: _questionIndex)
-            : Result(),
+            ? Quiz(
+                answerQuestion: _answerQuestion,
+                questions: _questions,
+                questionIndex: _questionIndex)
+            : Result(_totalScore),
       ),
     );
   }
